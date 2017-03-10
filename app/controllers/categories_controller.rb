@@ -9,10 +9,6 @@ class CategoriesController < ApplicationController
     @category = Category.new
   end
   
-  def show
-    
-  end
-  
   def create
     @category = Category.new(category_params)  
     if @category.save
@@ -23,6 +19,11 @@ class CategoriesController < ApplicationController
     end
   end
   
+  def show
+    @category = Category.find(params[:id])
+    @category_articles = @category.articles.paginate(page: params[:page], per_page: 5)
+  end
+
   private # methods below only avail to this controller
   
   def category_params
